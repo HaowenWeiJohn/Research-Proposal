@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultrasound as the Missing Modality — Research Proposal</title>
+
+    <!-- === FONTS === -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (APERTURE THEME)
+           =========================================== */
+        :root {
+            /* Colors */
+            --bg-cream: #F5F3EE;
+            --bg-white: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --accent: #00897B;
+            --accent-light: #26C6DA;
+            --accent-bg: rgba(0, 137, 123, 0.08);
+            --accent-border: rgba(0, 137, 123, 0.15);
+            --accent-dark: #004D40;
+            --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            --card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.1);
+            --us-bg: #0B1120;
+
+            /* Typography — MUST use clamp() */
+            --font-display: 'Bricolage Grotesque', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            /* Spacing — MUST use clamp() */
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --content-gap: clamp(1rem, 2vw, 2rem);
+
+            /* Animation */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-normal: 0.7s;
+        }
+
+        /* ===========================================
+           RESET & BASE
+           =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ===========================================
+           VIEWPORT FITTING: MANDATORY BASE STYLES
+           =========================================== */
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: var(--bg-cream);
+            font-family: var(--font-display);
+            color: var(--text-primary);
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+        }
+
+        :root {
+            --title-size: clamp(2.5rem, 8vw, 6rem);
+            --h2-size: clamp(2rem, 6vw, 4.5rem);
+            --h3-size: clamp(1.5rem, 4vw, 3rem);
+            --body-size: clamp(1.2rem, 2.5vw, 2rem);
+            --small-size: clamp(1rem, 1.8vw, 1.5rem);
+        }
+
+        .card, .container, .content-box {
+            max-width: min(90vw, 1000px);
+            max-height: min(80vh, 700px);
+        }
+
+        .feature-list, .bullet-list {
+            gap: clamp(0.4rem, 1vh, 1rem);
+        }
+
+        .feature-list li, .bullet-list li {
+            font-size: var(--body-size);
+            line-height: 1.4;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        img, .image-container {
+            max-width: 100%;
+            max-height: min(50vh, 400px);
+            object-fit: contain;
+        }
+
+        /* Short viewports (< 700px height) */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+                --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+                --h2-size: clamp(1rem, 3vw, 1.75rem);
+            }
+        }
+
+        /* Very short viewports (< 600px height) */
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+            }
+            .nav-dots, .keyboard-hint, .decorative {
+                display: none;
+            }
+        }
+
+        /* Extremely short (landscape phones, < 500px height) */
+        @media (max-height: 500px) {
+            :root {
+                --slide-padding: clamp(0.4rem, 2vw, 1rem);
+                --title-size: clamp(1rem, 3.5vw, 1.5rem);
+                --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+                --body-size: clamp(0.65rem, 1vw, 0.85rem);
+            }
+        }
+
+        /* Narrow viewports (< 600px width) */
+        @media (max-width: 600px) {
+            :root {
+                --title-size: clamp(1.25rem, 7vw, 2.5rem);
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        /* ===========================================
+           TOP ACCENT BAR (every slide)
+           =========================================== */
+        .top-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+            background-size: 200% 100%;
+            flex-shrink: 0;
+        }
+
+        /* ===========================================
+           REVEAL ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal,
+        .slide.visible .reveal-left,
+        .slide.visible .reveal-right,
+        .slide.visible .reveal-scale {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+
+        /* Stagger children */
+        .slide.visible .reveal:nth-child(1),
+        .slide.visible .reveal-left:nth-child(1) { transition-delay: 0.1s; }
+        .slide.visible .reveal:nth-child(2),
+        .slide.visible .reveal-left:nth-child(2) { transition-delay: 0.2s; }
+        .slide.visible .reveal:nth-child(3),
+        .slide.visible .reveal-left:nth-child(3) { transition-delay: 0.3s; }
+        .slide.visible .reveal:nth-child(4),
+        .slide.visible .reveal-left:nth-child(4) { transition-delay: 0.4s; }
+        .slide.visible .reveal:nth-child(5) { transition-delay: 0.5s; }
+        .slide.visible .reveal:nth-child(6) { transition-delay: 0.6s; }
+
+        .stagger-1 { transition-delay: 0.15s !important; }
+        .stagger-2 { transition-delay: 0.3s !important; }
+        .stagger-3 { transition-delay: 0.45s !important; }
+        .stagger-4 { transition-delay: 0.6s !important; }
+
+        /* ===========================================
+           COMMON ELEMENTS
+           =========================================== */
+        .section-number {
+            font-family: var(--font-mono);
+            font-size: clamp(1rem, 1.6vw, 1.4rem);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            margin-bottom: clamp(0.4rem, 1vh, 0.75rem);
+        }
+
+        .slide-title {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .slide-title .highlight {
+            color: var(--accent);
+        }
+
+        .slide-subtitle {
+            font-size: clamp(1.3rem, 2.4vw, 2rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .meta-tag {
+            font-family: var(--font-mono);
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            font-weight: 400;
+            color: var(--accent);
+            background: var(--accent-bg);
+            padding: 0.35em 0.7em;
+            border-radius: 4px;
+            border: 1px solid var(--accent-border);
+            display: inline-block;
+        }
+
+        .key-line {
+            font-family: var(--font-mono);
+            font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+            padding-top: clamp(0.5rem, 1vh, 1rem);
+            border-top: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        /* ===========================================
+           PROGRESS BAR
+           =========================================== */
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: var(--accent);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* ===========================================
+           NAVIGATION DOTS
+           =========================================== */
+        .nav-dots {
+            position: fixed;
+            right: clamp(12px, 2vw, 24px);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            opacity: 0.3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+
+        .nav-dot:hover { opacity: 0.6; }
+
+        .nav-dot.active {
+            opacity: 1;
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+
+        /* ===========================================
+           SLIDE 1: TITLE
+           =========================================== */
+        .title-slide .slide-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: var(--slide-padding);
+            gap: clamp(1.5rem, 4vw, 4rem);
+        }
+
+        .title-slide .left-col {
+            flex: 1.2;
+        }
+
+        .title-slide .right-col {
+            flex: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title-slide h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+        }
+
+        .title-slide h1 .highlight { color: var(--accent); }
+
+        .title-slide .subtitle {
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-top: clamp(0.3rem, 0.5vh, 0.5rem);
+        }
+
+        .title-slide .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(0.4rem, 1vw, 0.75rem);
+            margin-top: clamp(1.25rem, 3vh, 2rem);
+        }
+
+        /* Ultrasound circle */
+        .us-circle {
+            width: min(32vh, 300px);
+            height: min(32vh, 300px);
+            border-radius: 50%;
+            position: relative;
+            background: var(--us-bg);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .us-circle::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 40% 45%, rgba(0, 212, 170, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 55%, rgba(0, 150, 180, 0.2) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 100, 200, 0.1) 0%, transparent 70%);
+            animation: usShift 5s ease-in-out infinite alternate;
+        }
+
+        .us-circle::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 200%; height: 200%;
+            transform: translate(-50%, -50%);
+            background: repeating-radial-gradient(
+                circle at 50% 30%,
+                transparent 0px,
+                transparent 18px,
+                rgba(0, 212, 170, 0.08) 18px,
+                rgba(0, 212, 170, 0.08) 20px
+            );
+            animation: usRotate 25s linear infinite;
+        }
+
+        @keyframes usShift {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes usRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* ===========================================
+           SLIDE 2: THE INVISIBLE PROBLEM
+           =========================================== */
+        .problem-slide .slide-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: var(--slide-padding);
+            gap: clamp(1.5rem, 4vw, 4rem);
+        }
+
+        .problem-slide .left-col {
+            flex: 1;
+        }
+
+        .problem-slide .right-col {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Two planking figures */
+        .plank-comparison {
+            display: flex;
+            gap: clamp(1rem, 2vw, 2rem);
+            align-items: flex-end;
+        }
+
+        .plank-figure {
+            text-align: center;
+        }
+
+        .plank-figure .figure-label {
+            font-family: var(--font-mono);
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: clamp(0.3rem, 0.5vh, 0.5rem);
+            letter-spacing: 0.05em;
+        }
+
+        .plank-figure .figure-sublabel {
+            font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .body-outline {
+            width: min(18vh, 140px);
+            height: min(30vh, 240px);
+        }
+
+        .problem-slide .description {
+            font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-top: clamp(0.5rem, 1vh, 0.75rem);
+        }
+
+        /* ===========================================
+           SLIDE 3: WHAT CURRENT SENSORS SEE
+           =========================================== */
+        .sensors-slide .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--slide-padding);
+        }
+
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            margin-top: clamp(0.75rem, 2vh, 1.5rem);
+        }
+
+        .sensor-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: clamp(0.75rem, 2vw, 1.5rem);
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sensor-card .sensor-icon {
+            width: clamp(32px, 5vw, 48px);
+            height: clamp(32px, 5vw, 48px);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: clamp(0.4rem, 1vh, 0.75rem);
+            font-size: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .sensor-card .sensor-icon.vision { background: #E3F2FD; }
+        .sensor-card .sensor-icon.emg { background: #FFF3E0; }
+        .sensor-card .sensor-icon.tactile { background: #F3E5F5; }
+
+        .sensor-card h3 {
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 700;
+            margin-bottom: clamp(0.2rem, 0.5vh, 0.4rem);
+        }
+
+        .sensor-card .sees {
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: clamp(0.15rem, 0.3vh, 0.25rem);
+        }
+
+        .sensor-card .misses {
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+            color: #D32F2F;
+            font-weight: 500;
+        }
+
+        .bottom-line {
+            font-family: var(--font-mono);
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+            font-weight: 700;
+            color: var(--accent-dark);
+            text-align: center;
+            margin-top: clamp(0.75rem, 2vh, 1.5rem);
+            padding: clamp(0.5rem, 1vh, 0.75rem);
+            background: var(--accent-bg);
+            border-radius: 8px;
+            border: 1px solid var(--accent-border);
+        }
+
+        /* ===========================================
+           SLIDE 4: ULTRASOUND SEES THE ENGINE
+           =========================================== */
+        .ultrasound-slide .slide-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: var(--slide-padding);
+            gap: clamp(1.5rem, 4vw, 4rem);
+        }
+
+        .ultrasound-slide .left-col {
+            flex: 1;
+        }
+
+        .ultrasound-slide .right-col {
+            flex: 0.9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(0.5rem, 1vh, 1rem);
+        }
+
+        .capability-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.4rem, 1vh, 0.75rem);
+            margin-top: clamp(0.5rem, 1.5vh, 1rem);
+        }
+
+        .capability-list li {
+            font-size: clamp(1.3rem, 2.3vw, 1.9rem);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.4rem, 0.8vw, 0.6rem);
+            line-height: 1.4;
+        }
+
+        .capability-list .cap-icon {
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: clamp(1rem, 1.6vw, 1.3rem);
+            margin-top: 0.15em;
+        }
+
+        .capability-list strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Ultrasound scan visual */
+        .us-scan-visual {
+            width: min(35vh, 280px);
+            height: min(28vh, 220px);
+            border-radius: 16px;
+            background: var(--us-bg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+        }
+
+        .us-scan-visual::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 30% 40%, rgba(0, 212, 170, 0.3) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 60%, rgba(0, 180, 200, 0.2) 0%, transparent 35%),
+                radial-gradient(ellipse at 50% 30%, rgba(0, 100, 150, 0.15) 0%, transparent 45%),
+                radial-gradient(ellipse at 45% 70%, rgba(0, 212, 170, 0.12) 0%, transparent 30%);
+        }
+
+        /* Simulated ultrasound sweep */
+        .us-scan-visual::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 60px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 170, 0.1), transparent);
+            animation: usSweep 3s ease-in-out infinite;
+        }
+
+        @keyframes usSweep {
+            0% { left: -60px; }
+            100% { left: 100%; }
+        }
+
+        .us-scan-label {
+            font-family: var(--font-mono);
+            font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+            color: var(--text-muted);
+            text-align: center;
+            letter-spacing: 0.08em;
+        }
+
+        /* ===========================================
+           SLIDE 5: THREE CRITICAL GAPS
+           =========================================== */
+        .gaps-slide .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--slide-padding);
+        }
+
+        .gap-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            margin-top: clamp(0.75rem, 2vh, 1.5rem);
+        }
+
+        .gap-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: clamp(0.75rem, 2vw, 1.5rem);
+            box-shadow: var(--card-shadow);
+            border-left: 3px solid var(--accent);
+            position: relative;
+        }
+
+        .gap-card .gap-number {
+            font-family: var(--font-mono);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            color: rgba(0, 137, 123, 0.12);
+            line-height: 1;
+            margin-bottom: clamp(0.25rem, 0.5vh, 0.5rem);
+        }
+
+        .gap-card h3 {
+            font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: clamp(0.2rem, 0.5vh, 0.35rem);
+        }
+
+        .gap-card p {
+            font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* ===========================================
+           SLIDE 6: 3-YEAR TIMELINE
+           =========================================== */
+        .timeline-slide .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--slide-padding);
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: clamp(1rem, 3vh, 2rem);
+        }
+
+        /* Horizontal connecting line */
+        .timeline-line {
+            position: absolute;
+            top: clamp(20px, 3vh, 32px);
+            left: 5%;
+            right: 5%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+            z-index: 0;
+        }
+
+        .timeline-nodes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.5rem, 1.5vw, 1.5rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-node {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .node-dot {
+            width: clamp(36px, 5vh, 52px);
+            height: clamp(36px, 5vh, 52px);
+            border-radius: 50%;
+            background: var(--bg-white);
+            border: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(0.9rem, 2vw, 1.4rem);
+            box-shadow: 0 4px 16px rgba(0, 137, 123, 0.15);
+            margin-bottom: clamp(0.3rem, 0.8vh, 0.6rem);
+        }
+
+        .node-year {
+            font-family: var(--font-mono);
+            font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            margin-bottom: clamp(0.15rem, 0.3vh, 0.25rem);
+        }
+
+        .node-title {
+            font-size: clamp(1.4rem, 2.4vw, 2rem);
+            font-weight: 700;
+            margin-bottom: clamp(0.15rem, 0.3vh, 0.3rem);
+        }
+
+        .node-desc {
+            font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+            color: var(--text-secondary);
+            line-height: 1.4;
+            max-width: 260px;
+            margin: 0 auto;
+        }
+
+        .node-targets {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: clamp(0.2rem, 0.4vw, 0.3rem);
+            margin-top: clamp(0.3rem, 0.6vh, 0.5rem);
+        }
+
+        .node-targets .meta-tag {
+            font-size: clamp(0.9rem, 1.3vw, 1.15rem);
+            padding: 0.2em 0.5em;
+        }
+
+        /* ===========================================
+           SLIDE 7: IMPACT
+           =========================================== */
+        .impact-slide .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--slide-padding);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            margin-top: clamp(0.75rem, 2vh, 1.5rem);
+        }
+
+        .impact-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: clamp(0.75rem, 2vw, 1.5rem);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .impact-card:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .impact-icon {
+            width: clamp(40px, 6vw, 56px);
+            height: clamp(40px, 6vw, 56px);
+            border-radius: 50%;
+            background: var(--accent-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto clamp(0.4rem, 1vh, 0.75rem);
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+        }
+
+        .impact-card h3 {
+            font-size: clamp(1.4rem, 2.4vw, 2rem);
+            font-weight: 700;
+            margin-bottom: clamp(0.2rem, 0.5vh, 0.35rem);
+        }
+
+        .impact-card p {
+            font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* ===========================================
+           SLIDE 8: CLOSING
+           =========================================== */
+        .closing-slide .slide-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--slide-padding);
+            text-align: center;
+        }
+
+        .closing-content {
+            max-width: min(85vw, 700px);
+        }
+
+        .closing-content h1 {
+            font-size: clamp(2.5rem, 6.5vw, 5rem);
+            font-weight: 800;
+            line-height: 1.12;
+            letter-spacing: -0.02em;
+        }
+
+        .closing-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            margin: clamp(0.75rem, 2vh, 1.5rem) auto;
+            border-radius: 2px;
+        }
+
+        .closing-meta {
+            font-family: var(--font-mono);
+            font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* Small US circle for closing */
+        .closing-us-circle {
+            width: min(12vh, 80px);
+            height: min(12vh, 80px);
+            border-radius: 50%;
+            background: var(--us-bg);
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto clamp(0.75rem, 2vh, 1.5rem);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .closing-us-circle::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 40% 45%, rgba(0, 212, 170, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 55%, rgba(0, 150, 180, 0.25) 0%, transparent 40%);
+        }
+
+        .closing-us-circle::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 200%; height: 200%;
+            transform: translate(-50%, -50%);
+            background: repeating-radial-gradient(
+                circle at 50% 30%,
+                transparent 0px,
+                transparent 8px,
+                rgba(0, 212, 170, 0.1) 8px,
+                rgba(0, 212, 170, 0.1) 9px
+            );
+            animation: usRotate 20s linear infinite;
+        }
+
+        /* ===========================================
+           RESPONSIVE: MOBILE STACKING
+           =========================================== */
+        @media (max-width: 768px) {
+            .title-slide .slide-body,
+            .problem-slide .slide-body,
+            .ultrasound-slide .slide-body {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .title-slide .right-col,
+            .problem-slide .right-col {
+                order: -1;
+            }
+
+            .us-circle {
+                width: min(20vh, 160px);
+                height: min(20vh, 160px);
+            }
+
+            .sensor-grid,
+            .gap-cards,
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-nodes {
+                grid-template-columns: 1fr;
+                gap: clamp(0.75rem, 2vh, 1.5rem);
+            }
+
+            .timeline-line { display: none; }
+
+            .plank-comparison {
+                transform: scale(0.7);
+                transform-origin: center;
+            }
+        }
+
+        @media (max-width: 768px) and (max-height: 700px) {
+            .sensor-grid,
+            .gap-cards,
+            .impact-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .timeline-nodes {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .timeline-line { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- === PROGRESS BAR === -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- === NAVIGATION DOTS === -->
+    <nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+
+
+    <!-- ===========================================
+         SLIDE 1: TITLE
+         =========================================== -->
+    <section class="slide title-slide" aria-label="Title slide">
+        <div class="top-bar"></div>
+        <div class="slide-body">
+            <div class="left-col">
+                <p class="section-number reveal">001 &mdash; Research Proposal</p>
+                <h1 class="reveal">
+                    Ultrasound as the <span class="highlight">Missing Modality</span>
+                </h1>
+                <p class="subtitle reveal">for Understanding Human Physical Intelligence</p>
+                <div class="meta-row reveal">
+                    <span class="meta-tag">Haowen</span>
+                    <span class="meta-tag">MIT Immersion Lab</span>
+                    <span class="meta-tag">MIT.nano</span>
+                    <span class="meta-tag">March 2026</span>
+                </div>
+            </div>
+            <div class="right-col">
+                <div class="us-circle reveal-scale"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===========================================
+         SLIDE 2: THE INVISIBLE PROBLEM
+         =========================================== -->
+    <section class="slide problem-slide" aria-label="The Invisible Problem">
+        <div class="top-bar"></div>
+        <div class="slide-body">
+            <div class="left-col">
+                <p class="section-number reveal">002 &mdash; Motivation</p>
+                <h2 class="slide-title reveal">The <span class="highlight">Invisible</span> Problem</h2>
+                <p class="description reveal">
+                    Two people performing a plank can look visually identical &mdash; same alignment, same hold &mdash;
+                    while engaging <strong>completely different muscle groups</strong>. A coach watching from outside cannot
+                    distinguish these strategies.
+                </p>
+                <p class="description reveal" style="margin-top: clamp(0.3rem, 0.5vh, 0.5rem);">
+                    This extends to hand manipulation, sports, and rehabilitation &mdash; where internal muscle
+                    recruitment determines everything from injury risk to motor learning.
+                </p>
+                <p class="key-line reveal stagger-4">Same movement. Different muscles. Invisible.</p>
+            </div>
+            <div class="right-col">
+                <div class="plank-comparison reveal-scale">
+                    <!-- SVG: Two body outlines with different internal highlights -->
+                    <div class="plank-figure">
+                        <svg class="body-outline" viewBox="0 0 120 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Body outline -->
+                            <ellipse cx="60" cy="28" rx="18" ry="22" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <!-- Torso -->
+                            <path d="M42 48 L38 130 L50 135 L60 132 L70 135 L82 130 L78 48" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <!-- Arms -->
+                            <path d="M42 55 L20 110 L18 130" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <path d="M78 55 L100 110 L102 130" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <!-- Legs -->
+                            <path d="M48 135 L42 200 L38 215" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <path d="M72 135 L78 200 L82 215" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <!-- Internal: Rectus Abdominis (surface muscle - orange) -->
+                            <rect x="50" y="65" width="20" height="50" rx="6" fill="#FF6B6B" opacity="0.5"/>
+                            <rect x="50" y="65" width="20" height="50" rx="6" stroke="#FF6B6B" stroke-width="1.5" fill="none"/>
+                        </svg>
+                        <p class="figure-label">Person A</p>
+                        <p class="figure-sublabel">Rectus abdominis</p>
+                    </div>
+                    <div class="plank-figure">
+                        <svg class="body-outline" viewBox="0 0 120 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Body outline (same) -->
+                            <ellipse cx="60" cy="28" rx="18" ry="22" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <path d="M42 48 L38 130 L50 135 L60 132 L70 135 L82 130 L78 48" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <path d="M42 55 L20 110 L18 130" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <path d="M78 55 L100 110 L102 130" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <path d="M48 135 L42 200 L38 215" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <path d="M72 135 L78 200 L82 215" stroke="#1A1A1A" stroke-width="2" fill="none"/>
+                            <!-- Internal: Transverse + Obliques (deep muscles - teal) -->
+                            <path d="M40 70 Q45 65 50 70 L50 110 Q45 115 40 110 Z" fill="#00897B" opacity="0.4"/>
+                            <path d="M40 70 Q45 65 50 70 L50 110 Q45 115 40 110 Z" stroke="#00897B" stroke-width="1.5" fill="none"/>
+                            <path d="M70 70 Q75 65 80 70 L80 110 Q75 115 70 110 Z" fill="#00897B" opacity="0.4"/>
+                            <path d="M70 70 Q75 65 80 70 L80 110 Q75 115 70 110 Z" stroke="#00897B" stroke-width="1.5" fill="none"/>
+                            <ellipse cx="60" cy="95" rx="14" ry="22" fill="#26C6DA" opacity="0.3"/>
+                            <ellipse cx="60" cy="95" rx="14" ry="22" stroke="#26C6DA" stroke-width="1.5" fill="none"/>
+                        </svg>
+                        <p class="figure-label">Person B</p>
+                        <p class="figure-sublabel">Transverse + obliques</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===========================================
+         SLIDE 3: WHAT CURRENT SENSORS SEE
+         =========================================== -->
+    <section class="slide sensors-slide" aria-label="Current sensor limitations">
+        <div class="top-bar"></div>
+        <div class="slide-body">
+            <p class="section-number reveal">003 &mdash; Current Landscape</p>
+            <h2 class="slide-title reveal">What Current Sensors <span class="highlight">See</span></h2>
+
+            <div class="sensor-grid">
+                <div class="sensor-card reveal stagger-1">
+                    <div class="sensor-icon vision">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <h3>Vision</h3>
+                    <p class="sees">&#10003; Surface geometry, joint angles, posture</p>
+                    <p class="misses">&#10007; Cannot see beneath the skin</p>
+                </div>
+
+                <div class="sensor-card reveal stagger-2">
+                    <div class="sensor-icon emg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E65100" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>EMG</h3>
+                    <p class="sees">&#10003; Electrical muscle activation</p>
+                    <p class="misses">&#10007; Crosstalk, poor depth resolution</p>
+                </div>
+
+                <div class="sensor-card reveal stagger-3">
+                    <div class="sensor-icon tactile">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7B1FA2" stroke-width="2" stroke-linecap="round"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v6"/><path d="M10 10.5V2a2 2 0 0 0-2-2 2 2 0 0 0-2 2v10"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-5.7-2.4L3.4 16c-.5-.7-.4-1.7.3-2.2.5-.4 1.2-.4 1.7 0L6 14"/></svg>
+                    </div>
+                    <h3>Tactile</h3>
+                    <p class="sees">&#10003; Contact forces, pressure distribution</p>
+                    <p class="misses">&#10007; Cannot identify which muscles caused it</p>
+                </div>
+            </div>
+
+            <p class="bottom-line reveal stagger-4">None see the internal mechanical reality of movement.</p>
+        </div>
+    </section>
+
+
+    <!-- ===========================================
+         SLIDE 4: ULTRASOUND — THE MISSING PIECE
+         =========================================== -->
+    <section class="slide ultrasound-slide" aria-label="Ultrasound capabilities">
+        <div class="top-bar"></div>
+        <div class="slide-body">
+            <div class="left-col">
+                <p class="section-number reveal">004 &mdash; The Solution</p>
+                <h2 class="slide-title reveal">Ultrasound Sees <span class="highlight">the Engine</span></h2>
+                <p class="slide-subtitle reveal">Real-time visualization of sub-surface tissue dynamics &mdash; causally upstream of both movement and force.</p>
+
+                <ul class="capability-list">
+                    <li class="reveal stagger-1">
+                        <span class="cap-icon">&#9656;</span>
+                        <span><strong>Muscle deformation</strong> &mdash; individual muscles shortening and changing shape in real time</span>
+                    </li>
+                    <li class="reveal stagger-2">
+                        <span class="cap-icon">&#9656;</span>
+                        <span><strong>Tendon sliding</strong> &mdash; tendons gliding through sheaths as fingers move</span>
+                    </li>
+                    <li class="reveal stagger-3">
+                        <span class="cap-icon">&#9656;</span>
+                        <span><strong>Deep muscle activation</strong> &mdash; buried muscles invisible to surface EMG</span>
+                    </li>
+                    <li class="reveal stagger-4">
+                        <span class="cap-icon">&#9656;</span>
+                        <span><strong>Fascicle architecture</strong> &mdash; fiber geometry that determines force capacity</span>
+                    </li>
+                </ul>
+
+                <p class="key-line reveal" style="transition-delay: 0.7s;">Seeing the engine, not just the tire tracks.</p>
+            </div>
+            <div class="right-col">
+                <div class="us-scan-visual reveal-scale"></div>
+                <p class="us-scan-label reveal" style="transition-delay: 0.5s;">B-mode forearm ultrasound &bull; real-time &bull; wearable</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===========================================
+         SLIDE 5: THREE CRITICAL GAPS
+         =========================================== -->
+    <section class="slide gaps-slide" aria-label="Three research gaps">
+        <div class="top-bar"></div>
+        <div class="slide-body">
+            <p class="section-number reveal">005 &mdash; Research Gaps</p>
+            <h2 class="slide-title reveal">Three Gaps This Research <span class="highlight">Fills</span></h2>
+
+            <div class="gap-cards">
+                <div class="gap-card reveal stagger-1">
+                    <div class="gap-number">01</div>
+                    <h3>No Sensor Correlation Study</h3>
+                    <p>No work has rigorously quantified how ultrasound correlates with and complements EMG, vision, force, and motion capture across all meaningful combinations.</p>
+                </div>
+
+                <div class="gap-card reveal stagger-2">
+                    <div class="gap-number">02</div>
+                    <h3>No Reasoning Benchmark</h3>
+                    <p>MMTouch demonstrated multi-tactile reasoning power (+18.9% gain), but no benchmark includes ultrasound &mdash; the only modality revealing internal muscle dynamics.</p>
+                </div>
+
+                <div class="gap-card reveal stagger-3">
+                    <div class="gap-number">03</div>
+                    <h3>No AI Training System</h3>
+                    <p>Current rehab and sports AI relies on external cameras only. No system uses ultrasound&rsquo;s internal visibility for real-time, personalized training guidance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===========================================
+         SLIDE 6: 3-YEAR RESEARCH TIMELINE
+         =========================================== -->
+    <section class="slide timeline-slide" aria-label="Research timeline">
+        <div class="top-bar"></div>
+        <div class="slide-body">
+            <p class="section-number reveal">006 &mdash; Research Plan</p>
+            <h2 class="slide-title reveal">3-Year <span class="highlight">Research Path</span></h2>
+
+            <div class="timeline reveal" style="transition-delay: 0.3s;">
+                <div class="timeline-line"></div>
+                <div class="timeline-nodes">
+                    <div class="timeline-node reveal stagger-1">
+                        <div class="node-dot">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00897B" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        </div>
+                        <p class="node-year">YEAR 1</p>
+                        <p class="node-title">UltraPose</p>
+                        <p class="node-desc">Multimodal sensor correlation study. 15&ndash;25 subjects, controlled hand poses, exhaustive cross-modal ablation.</p>
+                        <div class="node-targets">
+                            <span class="meta-tag">NeurIPS D&amp;B</span>
+                            <span class="meta-tag">Dataset Release</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-node reveal stagger-2">
+                        <div class="node-dot">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00897B" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        </div>
+                        <p class="node-year">YEAR 2</p>
+                        <p class="node-title">Reasoning Benchmark</p>
+                        <p class="node-desc">MMTouch-style benchmark with ultrasound. Free-form manipulation, multimodal model training, modality ablation.</p>
+                        <div class="node-targets">
+                            <span class="meta-tag">CVPR / NeurIPS</span>
+                            <span class="meta-tag">Benchmark</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-node reveal stagger-3">
+                        <div class="node-dot">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00897B" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93"/><path d="M12 2a4 4 0 0 0-4 4c0 1.95 1.4 3.58 3.25 3.93"/><circle cx="12" cy="14" r="4"/><path d="M12 18v4"/><path d="M8 22h8"/></svg>
+                        </div>
+                        <p class="node-year">YEAR 3</p>
+                        <p class="node-title">Agentic AI Coach</p>
+                        <p class="node-desc">Real-time training system using US+EMG+Vision. Movement correctness at the internal muscle level, personalized feedback.</p>
+                        <div class="node-targets">
+                            <span class="meta-tag">Nature-family</span>
+                            <span class="meta-tag">CHI / UIST</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===========================================
+         SLIDE 7: BROADER IMPACT
+         =========================================== -->
+    <section class="slide impact-slide" aria-label="Broader impact">
+        <div class="top-bar"></div>
+        <div class="slide-body">
+            <p class="section-number reveal">007 &mdash; Impact</p>
+            <h2 class="slide-title reveal">Broader <span class="highlight">Impact</span></h2>
+
+            <div class="impact-grid">
+                <div class="impact-card reveal stagger-1">
+                    <div class="impact-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00897B" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <h3>Rehabilitation</h3>
+                    <p>Real-time muscle-level feedback for stroke recovery, post-surgical rehab, and neuromuscular disorders. &ldquo;Your deep flexor is at 30% &mdash; engage it more.&rdquo;</p>
+                </div>
+
+                <div class="impact-card reveal stagger-2">
+                    <div class="impact-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00897B" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <h3>Sports Training</h3>
+                    <p>Proactive injury prevention by detecting internal recruitment errors before they cause harm. From reactive treatment to proactive optimization.</p>
+                </div>
+
+                <div class="impact-card reveal stagger-3">
+                    <div class="impact-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00897B" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h3>Research Community</h3>
+                    <p>Open datasets and benchmarks catalyzing ultrasound-inclusive multimodal research &mdash; as emg2pose did for EMG and MMTouch for tactile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===========================================
+         SLIDE 8: CLOSING
+         =========================================== -->
+    <section class="slide closing-slide" aria-label="Closing">
+        <div class="top-bar"></div>
+        <div class="slide-body">
+            <div class="closing-content">
+                <div class="closing-us-circle reveal-scale"></div>
+                <h1 class="reveal">
+                    From Surface Observation<br>
+                    to <span class="highlight">Deep Biomechanical Understanding</span>
+                </h1>
+                <div class="closing-divider reveal" style="transition-delay: 0.3s;"></div>
+                <p class="closing-meta reveal" style="transition-delay: 0.4s;">
+                    Haowen &bull; MIT Immersion Lab &bull; MIT.nano
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===========================================
+       SLIDE PRESENTATION CONTROLLER
+       =========================================== -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.isScrolling = false;
+
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupWheelNav();
+                this.setupProgressBar();
+                this.setupNavDots();
+
+                // Mark first slide visible
+                this.slides[0].classList.add('visible');
+            }
+
+            /* --- Intersection Observer: add .visible on scroll --- */
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            // Update current slide index
+                            const index = Array.from(this.slides).indexOf(entry.target);
+                            if (index !== -1) {
+                                this.currentSlide = index;
+                                this.updateNavDots();
+                                this.updateProgressBar();
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.5
+                });
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            /* --- Keyboard: arrows, space, page up/down --- */
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    switch(e.key) {
+                        case 'ArrowDown':
+                        case 'ArrowRight':
+                        case ' ':
+                        case 'PageDown':
+                            e.preventDefault();
+                            this.goToSlide(this.currentSlide + 1);
+                            break;
+                        case 'ArrowUp':
+                        case 'ArrowLeft':
+                        case 'PageUp':
+                            e.preventDefault();
+                            this.goToSlide(this.currentSlide - 1);
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.goToSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.goToSlide(this.slides.length - 1);
+                            break;
+                    }
+                });
+            }
+
+            /* --- Touch/swipe navigation --- */
+            setupTouchNav() {
+                let touchStartY = 0;
+                let touchStartX = 0;
+
+                document.addEventListener('touchstart', (e) => {
+                    touchStartY = e.touches[0].clientY;
+                    touchStartX = e.touches[0].clientX;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const deltaY = touchStartY - e.changedTouches[0].clientY;
+                    const deltaX = touchStartX - e.changedTouches[0].clientX;
+
+                    // Only navigate if vertical swipe is dominant and significant
+                    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50) {
+                        if (deltaY > 0) {
+                            this.goToSlide(this.currentSlide + 1);
+                        } else {
+                            this.goToSlide(this.currentSlide - 1);
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            /* --- Mouse wheel navigation --- */
+            setupWheelNav() {
+                let wheelTimeout = null;
+                document.addEventListener('wheel', (e) => {
+                    if (this.isScrolling) return;
+                    clearTimeout(wheelTimeout);
+                    wheelTimeout = setTimeout(() => {
+                        if (e.deltaY > 30) {
+                            this.goToSlide(this.currentSlide + 1);
+                        } else if (e.deltaY < -30) {
+                            this.goToSlide(this.currentSlide - 1);
+                        }
+                    }, 50);
+                }, { passive: true });
+            }
+
+            /* --- Navigate to slide --- */
+            goToSlide(index) {
+                if (index < 0 || index >= this.slides.length || index === this.currentSlide) return;
+
+                this.isScrolling = true;
+                this.currentSlide = index;
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateNavDots();
+                this.updateProgressBar();
+
+                setTimeout(() => { this.isScrolling = false; }, 800);
+            }
+
+            /* --- Progress bar --- */
+            setupProgressBar() {
+                this.progressBar = document.getElementById('progressBar');
+                this.updateProgressBar();
+            }
+
+            updateProgressBar() {
+                if (!this.progressBar) return;
+                const progress = ((this.currentSlide + 1) / this.slides.length) * 100;
+                this.progressBar.style.width = progress + '%';
+            }
+
+            /* --- Navigation dots --- */
+            setupNavDots() {
+                const container = document.getElementById('navDots');
+                if (!container) return;
+
+                this.slides.forEach((_, i) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+                    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                    dot.addEventListener('click', () => this.goToSlide(i));
+                    container.appendChild(dot);
+                });
+
+                this.navDotElements = container.querySelectorAll('.nav-dot');
+            }
+
+            updateNavDots() {
+                if (!this.navDotElements) return;
+                this.navDotElements.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === this.currentSlide);
+                });
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+</body>
+</html>
