@@ -277,7 +277,7 @@ The MIT Immersion Lab is uniquely positioned to pursue this research:
 
 ### 7.1 Ultrasound for Hand Pose Estimation
 
-The field is shifting from discrete gesture classification to continuous regression. The Nature Communications 2025 paper demonstrated user-generic VR hand control from a portable ultrasound armband [7], while IMEC's 2026 work explored parameter-efficient approaches toward estimation of up to 23 hand-wrist DoF [19]. Bimbraw et al. (2023) predicted MCP joint angles with 7.35-degree RMSE from B-mode forearm ultrasound [8]. A deep learning framework for finger motion recognition achieved 95.64% classification accuracy across 9 finger motions [9]. UltraGlove (SIGGRAPH Asia 2023) used MEMS ultrasonic sensors for full hand pose reconstruction [20]. GPT Sonography (NeurIPS AIM-FM 2024) demonstrated that VLMs can decode gestures from ultrasound images zero-shot [21]. However, no work achieves full continuous hand pose regression from wearable ultrasound at scale.
+Ultrasound-based hand gesture classification has matured rapidly: a deep learning framework achieved 95.64% accuracy across 9 finger motions [9], GPT Sonography (NeurIPS AIM-FM 2024) showed that VLMs can decode gestures from ultrasound images zero-shot [21], and IMEC's 2026 work demonstrated competitive classification accuracy with 87.5% fewer parameters [19]. The field is now shifting toward continuous regression. Bimbraw et al. (2023) predicted MCP joint angles with 7.35-degree RMSE from B-mode forearm ultrasound [8], UltraGlove (SIGGRAPH Asia 2023) used finger-mounted MEMS ultrasonic sensors for full hand pose reconstruction [20], and the Nature Communications 2025 paper demonstrated user-generic VR hand control from a portable ultrasound armband [7]. However, no work achieves full continuous hand pose regression from wearable ultrasound at scale.
 
 ### 7.2 Sonomyography and Ultrasound for Muscle Assessment
 
@@ -371,7 +371,7 @@ By releasing the UltraPose dataset (Year 1) and the multimodal reasoning benchma
 [23] "Proprioceptive Sonomyographic Control: A novel method for intuitive and proportional control," *Scientific Reports*, 2019. https://www.nature.com/articles/s41598-019-45459-7
 
 [24] "Ultrasound Imaging and Machine Learning to Detect Missing Hand Motions for Individuals Receiving Targeted Muscle Reinnervation," 2025. https://pubmed.ncbi.nlm.nih.gov/40614146/
-
+ 
 [25] Y. Zou et al., "A Multimodal Fusion Model for Estimating Human Hand Force: Comparing sEMG and Ultrasound Signals," *IEEE RAM*, 2022. https://ieeexplore.ieee.org/document/9794325/
 
 [26] "MASTER: A Multi-Modal Foundation Model for Human Activity Recognition," *IMWUT/UbiComp*, 2025. https://dl.acm.org/doi/10.1145/3749511
