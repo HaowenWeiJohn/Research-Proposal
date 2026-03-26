@@ -2,8 +2,8 @@
 
 ## A 3-Year Research Proposal
 
-**Researcher:** Haowen
-**Lab:** MIT Immersion Lab (MIT.nano)
+**Researcher:** Haowen Wei
+**Lab:** Device Realization Lab & Immersion Lab, MIT
 **Date:** March 2026
 
 ---
