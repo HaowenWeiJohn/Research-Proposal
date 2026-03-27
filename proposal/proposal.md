@@ -165,7 +165,7 @@ Participants manipulate real daily objects freely, naturally varying their grip 
 - Train VLM-based or multimodal models on the benchmark, following MMTouch's evaluation paradigm
 - **Fusion strategies:** Early fusion, late fusion, and cross-attention mechanisms
 - **Cross-modal prediction:** Evaluate the practical question — can models trained with ultrasound supervision deploy without it? (Train with US, infer from vision+EMG alone)
-- Self-supervised pretraining on ultrasound sequences (adapting approaches from clinical ultrasound [15] and temporal reconstruction [16]) to reduce labeled data requirements
+- Self-supervised pretraining on ultrasound sequences (adapting approaches from clinical ultrasound [11] and temporal reconstruction [12]) to reduce labeled data requirements
 
 #### 4.2.3 Evaluation and Analysis
 
@@ -312,64 +312,8 @@ By releasing the UltraPose dataset (Year 1) and the multimodal reasoning benchma
 
 [10] "Estimating continuous data of wrist joint angles using ultrasound images," *arXiv*, 2024. https://arxiv.org/html/2401.02152v1
 
-[11] "Wearable and Ultra-Low-Power Fusion of EMG and A-Mode US for Hand-Wrist Kinematic Tracking," ETH Zurich, *arXiv*, 2025. https://arxiv.org/abs/2510.02000
+[11] "From pretraining to privacy: federated ultrasound foundation model with self-supervised learning" (UltraFedFM), *npj Digital Medicine*, 2025. https://www.nature.com/articles/s41746-025-02085-0
 
-[12] "GaitDynamics: A Generative Foundation Model for Analyzing Human Walking and Running," *Nature Biomedical Engineering*, 2026. https://www.nature.com/articles/s41551-025-01565-8
-
-[13] "BiomechGPT: Towards a Biomechanically Fluent Multimodal Foundation Model for Clinically Relevant Motion Tasks," *arXiv*, 2025. https://arxiv.org/abs/2505.18465
-
-[14] "Wrist2Finger: Sensing Fingertip Force for Force-Aware Hand Interaction," *UIST*, 2025. https://dl.acm.org/doi/10.1145/3746059.3747767
-
-[15] "From pretraining to privacy: federated ultrasound foundation model with self-supervised learning" (UltraFedFM), *npj Digital Medicine*, 2025. https://www.nature.com/articles/s41746-025-02085-0
-
-[16] "Self-Supervised Temporal Ultrasound Reconstruction for Muscle Atrophy Evaluation," *Springer*, 2023. https://link.springer.com/chapter/10.1007/978-981-99-8546-3_22
-
-[17] "Sonomyography for Control of Upper-Limb Prostheses: Current State and Future Directions," *JPO*, 2024. https://pmc.ncbi.nlm.nih.gov/articles/PMC11230649/
-
-[18] V. Nazari et al., "ProRuka: A Highly Efficient HMI Algorithm for Controlling a Novel Prosthetic Hand with 6-DOF Using Sonomyography," *arXiv*, 2024. https://arxiv.org/abs/2407.19859
-
-[19] A. Lykourinas et al., "Parameter-Efficient Deep Learning for Ultrasound-Based Human-Machine Interfaces," *arXiv*, February 2026. https://arxiv.org/abs/2603.15625
-
-[20] Q. Zhang et al., "Hand Pose Estimation with MEMS-Ultrasonic Sensors," *SIGGRAPH Asia*, 2023. https://dl.acm.org/doi/10.1145/3610548.3618202
-
-[21] "GPT Sonography: Hand Gesture Decoding from Forearm Ultrasound Images via VLM," *NeurIPS AIM-FM Workshop*, 2024. https://arxiv.org/abs/2407.10870
-
-[22] X. Yang et al., "Sonomyographic Prosthetic Interaction: Online Simultaneous and Proportional Control," *IEEE/ASME T-Mech*, 2023. https://ieeexplore.ieee.org/document/9903068/
-
-[23] "Proprioceptive Sonomyographic Control: A novel method for intuitive and proportional control," *Scientific Reports*, 2019. https://www.nature.com/articles/s41598-019-45459-7
-
-[24] "Ultrasound Imaging and Machine Learning to Detect Missing Hand Motions for Individuals Receiving Targeted Muscle Reinnervation," 2025. https://pubmed.ncbi.nlm.nih.gov/40614146/
- 
-[25] Y. Zou et al., "A Multimodal Fusion Model for Estimating Human Hand Force: Comparing sEMG and Ultrasound Signals," *IEEE RAM*, 2022. https://ieeexplore.ieee.org/document/9794325/
-
-[26] "MASTER: A Multi-Modal Foundation Model for Human Activity Recognition," *IMWUT/UbiComp*, 2025. https://dl.acm.org/doi/10.1145/3749511
-
-[27] Y. Luo et al., "NormWear: Toward Foundation Model for Multivariate Wearable Sensing of Physiological Signals," *arXiv*, 2024. https://arxiv.org/abs/2412.09758
-
-[28] "NeuralFeels with neural fields: Visuotactile perception for in-hand manipulation," *Science Robotics*, 2024. https://www.science.org/doi/10.1126/scirobotics.adl0628
-
-[29] "GenForce: Training Tactile Sensors to Learn Force Sensing from Each Other," *Nature Communications*, 2026. https://www.nature.com/articles/s41467-026-68753-1
-
-[30] ManiSkill-ViTac Challenge 2025. https://ai-workshops.github.io/maniskill-vitac-challenge-2025/
-
-[31] "Forearm Ultrasound based Gesture Recognition on Edge," *arXiv*, 2024. https://arxiv.org/abs/2409.09915
-
-[32] "Unsupervised Feature Extraction From Raw Data for Gesture Recognition With Wearable Ultralow-Power Ultrasound," 2024. https://pubmed.ncbi.nlm.nih.gov/38787674/
-
-[33] "DL_Track_US: Fully Automated Analysis of Muscle Architecture from B-Mode Ultrasound Images," 2024. https://pubmed.ncbi.nlm.nih.gov/38007322/
-
-[34] "Deep Learning Enables Accurate Soft Tissue Tendon Deformation Estimation In Vivo via Ultrasound Imaging" (StrainNet), *Scientific Reports*, 2024. https://www.nature.com/articles/s41598-024-68875-w
-
-[35] "Real-Time Visual Biofeedback via Wearable Ultrasound Imaging Can Enhance the Muscle Contraction Training Outcome," *JSCR*, 2022. https://pmc.ncbi.nlm.nih.gov/articles/PMC8936156/
-
-[36] "Implementing Ultrasound Imaging for the Assessment of Muscle and Tendon Properties in Elite Sports," *Sports Medicine*, 2021. https://pmc.ncbi.nlm.nih.gov/articles/PMC8124062/
-
-[37] "Artificial Intelligence in Sports Biomechanics: A Scoping Review," *Bioengineering*, 2025. https://pmc.ncbi.nlm.nih.gov/articles/PMC12383302/
-
-[38] "K2MUSE: A human lower limb multimodal dataset under diverse conditions," *arXiv*, 2025. https://arxiv.org/abs/2504.14602
-
-[39] Q. Zhang et al., "AnkleImage: An ultrafast ultrasound image dataset to understand ankle joint muscle contractility," *Scientific Data*, 2024. https://www.nature.com/articles/s41597-024-04285-x
-
-[40] "AI-Driven Medical Image Analysis for Sports Injury Diagnosis and Prevention," *Scientific Reports*, 2025. https://www.nature.com/articles/s41598-025-20580-y
+[12] "Self-Supervised Temporal Ultrasound Reconstruction for Muscle Atrophy Evaluation," *Springer*, 2023. https://link.springer.com/chapter/10.1007/978-981-99-8546-3_22
 
 ---
