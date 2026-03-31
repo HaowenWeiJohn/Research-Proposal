@@ -10,9 +10,7 @@
 5. Wearable Ultrasound Hardware
 
 ## Act 3: Multimodal Integration — Without Ultrasound
-6. Multimodal Sensor Fusion for Human Movement
-7. Multimodal Benchmarks and Datasets
-8. Multimodal Reasoning Models
+6. Multimodal Sensing, Benchmarks, and Reasoning for Human Movement
 
 ## Act 4: The Application
-9. AI for Physical Training and Rehabilitation
+7. AI for Physical Training and Rehabilitation

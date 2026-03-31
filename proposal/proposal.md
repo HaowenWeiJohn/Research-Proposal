@@ -278,6 +278,24 @@ Despite this momentum, sEMG faces fundamental physical limitations that no amoun
 
 The research community has begun to recognize these limitations. A recent review of sonomyography — the use of ultrasound imaging to decode muscle activity — explicitly frames it as an alternative that addresses sEMG's depth and spatial resolution deficits [22], noting that imaging-based approaches can visualize individual muscle deformations that electrical signals conflate. This emerging perspective suggests that the path forward for internal sensing may require moving beyond electrical measurement altogether — from detecting that muscles are active to *seeing* how they move.
 
+### 7.3 Clinical Ultrasound and Muscle Imaging
+
+B-mode ultrasound has served as the gold standard for non-invasive muscle architecture assessment for decades. Fukunaga et al. [23] established that ultrasound can measure pennation angle and fascicle length in contracting human muscles in vivo — the foundational demonstration that ultrasound reveals internal muscle geometry not just at rest but during active movement. Pillen et al. [24] showed that quantitative echointensity serves as a biomarker for neuromuscular disease, demonstrating that ultrasound captures clinically meaningful internal information — such as the replacement of muscle tissue by fat or fibrous tissue — that is entirely inaccessible to surface sensors. Sikdar et al. [25] articulated the broader vision of dynamic ultrasound imaging for real-time musculoskeletal function quantification, arguing that integrating continuous muscle and tendon measurements with conventional joint kinematics could yield novel insight into both normal function and pathophysiology.
+
+Artificial intelligence is now accelerating clinical muscle ultrasound analysis. UltraFedFM [11] developed a federated foundation model for ultrasound that enables cross-institutional learning while preserving patient privacy, while self-supervised approaches [12] enable muscle atrophy evaluation from temporal ultrasound sequences without manual annotation. Yet clinical muscle imaging remains largely tethered to controlled settings with bulky equipment and expert interpretation — a gap that has motivated parallel efforts to bring ultrasound-based sensing out of the clinic and into wearable, real-time applications for gesture recognition (Section 7.4) and always-on monitoring (Section 7.5).
+
+### 7.4 Ultrasound-Based Gesture and Movement Sensing
+
+The use of ultrasound to decode motor intent from muscle deformation — termed "sonomyography" by Zheng et al. [26] — originated in the observation that B-mode ultrasound of the forearm can track morphological changes in muscles during wrist and hand movement, with sufficient fidelity to distinguish between different motor actions. Castellini et al. [27] subsequently demonstrated that ultrasound image features correlate linearly with finger metacarpophalangeal joint angles, establishing sonomyography as a viable human-machine interface for prosthetic control. EchoFlex [28] brought ultrasound-based gesture recognition into the HCI community, systematically comparing forearm mounting positions for a wearable ultrasonographic device and demonstrating robust classification across sessions.
+
+Recent work has pushed sonomyography beyond discrete gesture classification toward continuous, multi-degree-of-freedom estimation and force sensing. Bimbraw et al. [8] simultaneously estimated hand configurations and individual finger joint angles from forearm ultrasound. Deep learning frameworks have achieved fine-grained finger motion recognition from ultrasound images [9], while continuous wrist joint angle estimation has been demonstrated from A-mode ultrasound signals [10]. Most notably, Jin et al. [29] extended sonomyography beyond kinematics altogether, using wearable A-mode ultrasound to estimate joint torque during dynamic activities including weightlifting and locomotion with less than 7.6% error — demonstrating that ultrasound can capture not just how the body moves but the forces it produces. This progression from discrete gesture labels to continuous kinematics to dynamics mirrors the trajectory the field needs: understanding physical intelligence requires knowing not just *what* the hand is doing but *how hard* and *with which muscles*.
+
+### 7.5 Wearable Ultrasound Hardware
+
+The clinical value of muscle ultrasound has driven rapid progress in miniaturizing ultrasound hardware for wearable use. Wang et al. [30] demonstrated bioadhesive ultrasound stickers — stamp-sized devices that adhere directly to skin and enable up to 48 hours of continuous organ imaging without manual operation (Science). Lin et al. [31] achieved a fully integrated wireless wearable ultrasound system capable of monitoring deep tissues in moving subjects, eliminating the tether to benchtop electronics that had confined ultrasound to clinical settings (Nature Biotechnology). On the miniaturized sensing side, Gao et al. [6] demonstrated echomyography from a single transducer element small enough for wrist-worn deployment (Nature Electronics), while WULPUS [5] achieved ultra-low-power wearable A-mode ultrasound suitable for battery-operated, always-on use.
+
+Most recently, this hardware trajectory has converged with the gesture and movement sensing goals described above. Grandi Sgambato et al. [7] achieved user-generic wrist and hand tracking for virtual reality from wearable ultrasound — critically, without requiring per-user calibration — demonstrating that ultrasound-based interfaces can generalize across individuals (Nature Communications). Lu et al. [32] demonstrated a fully integrated, wireless ultrasound imaging wristband that continuously tracks 22 degrees of freedom across all five fingers and the palm in real time with less than 120 milliseconds of latency, enabling control of a robotic hand with sufficient dexterity for piano playing (Nature Electronics). This trajectory — from bulky clinical probes to smartwatch-sized wearable imaging systems — positions ultrasound as a practical modality for the always-on internal sensing that this proposal requires.
+
 ---
 
 ## 8. Broader Impact
@@ -338,5 +356,25 @@ By releasing the UltraPose dataset (Year 1) and the multimodal reasoning benchma
 [21] V. Medved, S. Medved, and I. Kovač, "Critical Appraisal of Surface Electromyography (sEMG) as a Taught Subject and Clinical Tool in Medicine and Kinesiology," *Frontiers in Neurology*, vol. 11, 560363, 2020. https://doi.org/10.3389/fneur.2020.560363
 
 [22] V. Nazari and Y. P. Zheng, "Controlling Upper Limb Prostheses Using Sonomyography (SMG): A Review," *Sensors*, vol. 23, no. 4, 1885, 2023. https://doi.org/10.3390/s23041885
+
+[23] T. Fukunaga, Y. Ichinose, M. Ito, Y. Kawakami, and S. Fukashiro, "Determination of fascicle length and pennation in a contracting human muscle in vivo," *Journal of Applied Physiology*, vol. 82, no. 1, pp. 354–358, 1997. https://doi.org/10.1152/jappl.1997.82.1.354
+
+[24] S. Pillen, I. M. P. Arts, and M. J. Zwarts, "Muscle ultrasound in neuromuscular disorders," *Muscle & Nerve*, vol. 37, no. 6, pp. 679–693, 2008. https://doi.org/10.1002/mus.21015
+
+[25] S. Sikdar, Q. Wei, and N. Cortes, "Dynamic ultrasound imaging applications to quantify musculoskeletal function," *Exercise and Sport Sciences Reviews*, vol. 42, no. 3, pp. 126–135, 2014. https://doi.org/10.1249/JES.0000000000000015
+
+[26] Y. P. Zheng, M. M. F. Chan, J. Shi, X. Chen, and Q. H. Huang, "Sonomyography: Monitoring morphological changes of forearm muscles in actions with the feasibility for the control of powered prosthesis," *Medical Engineering & Physics*, vol. 28, no. 5, pp. 405–415, 2006. https://doi.org/10.1016/j.medengphy.2005.07.012
+
+[27] C. Castellini, G. Passig, and E. Zarka, "Using ultrasound images of the forearm to predict finger positions," *IEEE TNSRE*, vol. 20, no. 6, pp. 788–797, 2012. https://doi.org/10.1109/TNSRE.2012.2207916
+
+[28] J. McIntosh, A. Marzo, M. Fraser, and C. Phillips, "EchoFlex: Hand Gesture Recognition using Ultrasound Imaging," *ACM CHI*, pp. 1923–1934, 2017. https://doi.org/10.1145/3025453.3025807
+
+[29] Y. Jin, J. T. Alvarez, E. L. Suitor, et al., "Estimation of joint torque in dynamic activities using wearable A-mode ultrasound," *Nature Communications*, vol. 15, 5756, 2024. https://doi.org/10.1038/s41467-024-50038-0
+
+[30] C. Wang, X. Chen, L. Wang, M. Makihata, H.-C. Liu, T. Zhou, and X. Zhao, "Bioadhesive ultrasound for long-term continuous imaging of diverse organs," *Science*, vol. 377, no. 6605, pp. 517–523, 2022. https://doi.org/10.1126/science.abo2542
+
+[31] M. Lin, Z. Zhang, X. Gao, Y. Bian, R. S. Wu, et al., "A fully integrated wearable ultrasound system to monitor deep tissues in moving subjects," *Nature Biotechnology*, vol. 42, no. 3, pp. 448–457, 2024. https://doi.org/10.1038/s41587-023-01800-0
+
+[32] G. Lu, S. Kim, X. Chen, Y. Zeng, D. Li, S. Wang, et al., "Hand tracking using wearable wrist imaging," *Nature Electronics*, 2026. https://doi.org/10.1038/s41928-026-01594-4
 
 ---
