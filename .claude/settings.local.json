@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start style-a.html)",
+      "Bash(start style-b.html)",
+      "Bash(start style-c.html)",
+      "Bash(start presentation.html)"
+    ]
+  }
+}
