@@ -264,6 +264,20 @@ The MIT Immersion Lab is uniquely positioned to pursue this research:
 
 ## 7. Related Work
 
+### 7.1 Vision-Based Hand Pose Estimation
+
+Vision-based hand pose estimation has undergone remarkable progress in the past decade. Early work on multi-person pose estimation established real-time 2D keypoint detection using part affinity fields [13], which subsequent systems extended to the hand. MediaPipe Hands [14] brought real-time hand tracking to mobile devices, demonstrating that accurate 21-keypoint estimation could run on consumer hardware without specialized sensors. On the data side, InterHand2.6M [15] provided the community with 2.6 million frames of annotated interacting hand poses from multiple subjects, enabling training at a scale previously unavailable. Most recently, transformer-based architectures such as HaMeR [16] have pushed reconstruction accuracy further, leveraging attention mechanisms to estimate full 3D hand meshes from single RGB images. Collectively, these advances have made vision-based hand tracking fast, accessible, and increasingly accurate.
+
+Yet vision-based approaches face a fundamental ceiling rooted in what cameras can observe. The first limitation is occlusion: when fingers occlude one another, when both hands interact, or when the hand grasps an object, critical keypoints become invisible. Occlusion-aware architectures such as HandOccNet [17] partially mitigate this through learned feature propagation, but they are estimating what they cannot see, not observing it. The deeper limitation, however, is not occlusion but *opacity*: even a perfectly unoccluded view of the hand reveals only its surface geometry — joint angles, skin deformation, fingertip positions — never the internal muscle dynamics that produced that configuration. OpenCap [1] illustrates this ceiling clearly: it achieves impressive biomechanical estimates from smartphone video, but must *infer* muscle activations from external kinematics through physics-based musculoskeletal simulation, producing estimates whose accuracy depends entirely on model assumptions. Two people producing an identical hand pose may engage entirely different forearm muscles — relying on different flexor digitorum profundus vs. superficialis recruitment, or compensating with wrist extensors — and no camera system, however advanced, can distinguish these strategies. Vision observes the effect of muscle action; it cannot observe the cause.
+
+### 7.2 Surface EMG for Hand Pose and Gesture
+
+Surface electromyography (sEMG) offers what vision cannot: a signal originating from within the body. By measuring the electrical potentials generated during muscle contraction, sEMG provides a window into motor intent that is temporally precise and independent of line-of-sight. The Ninapro database [18] established standardized evaluation for sEMG-based hand gesture recognition, enabling systematic comparison across algorithms and sparking a generation of deep learning approaches including transfer learning methods that reduce per-user calibration requirements [19]. More recently, the emg2pose benchmark [3] demonstrated unprecedented scale — 370 hours of sEMG data from 193 users — for continuous hand pose estimation, while Meta's CTRL-Labs neural interface [20] achieved generic, non-invasive decode of motor intent from a wrist-worn sEMG band, bringing sEMG-based interaction from the laboratory to a consumer-facing demonstration published in Nature. These advances position sEMG as a serious candidate for always-on neural interfaces.
+
+Despite this momentum, sEMG faces fundamental physical limitations that no amount of algorithmic sophistication can fully overcome. A critical appraisal by Medved et al. [21] documents the core challenges: **cross-talk** between adjacent muscles — particularly severe in the forearm, where over twenty muscles are packed into a compact volume — means that surface electrodes inevitably capture blended signals from multiple sources. **Spatial resolution** is inherently low because the electrical field diffuses through tissue; sEMG cannot distinguish contributions from deep muscles (e.g., flexor digitorum profundus) versus superficial ones (e.g., flexor digitorum superficialis), yet these muscles serve different biomechanical roles. Additionally, signals are sensitive to electrode placement, skin impedance, and perspiration, introducing session-to-session variability that complicates longitudinal use [2]. Even high-density sEMG arrays, which increase electrode count, cannot resolve the depth ambiguity: they sample more points on the same surface but do not image deeper structures.
+
+The research community has begun to recognize these limitations. A recent review of sonomyography — the use of ultrasound imaging to decode muscle activity — explicitly frames it as an alternative that addresses sEMG's depth and spatial resolution deficits [22], noting that imaging-based approaches can visualize individual muscle deformations that electrical signals conflate. This emerging perspective suggests that the path forward for internal sensing may require moving beyond electrical measurement altogether — from detecting that muscles are active to *seeing* how they move.
+
 ---
 
 ## 8. Broader Impact
@@ -304,5 +318,25 @@ By releasing the UltraPose dataset (Year 1) and the multimodal reasoning benchma
 [11] "From pretraining to privacy: federated ultrasound foundation model with self-supervised learning" (UltraFedFM), *npj Digital Medicine*, 2025. https://www.nature.com/articles/s41746-025-02085-0
 
 [12] "Self-Supervised Temporal Ultrasound Reconstruction for Muscle Atrophy Evaluation," *Springer*, 2023. https://link.springer.com/chapter/10.1007/978-981-99-8546-3_22
+
+[13] Z. Cao, G. Hidalgo, T. Simon, S.-E. Wei, and Y. Sheikh, "OpenPose: Realtime Multi-Person 2D Pose Estimation Using Part Affinity Fields," *IEEE TPAMI*, vol. 43, no. 1, pp. 172–186, 2021. https://arxiv.org/abs/1812.08008
+
+[14] F. Zhang, V. Bazarevsky, A. Vakunov, A. Tkachenka, G. Sung, C.-L. Chang, and M. Grundmann, "MediaPipe Hands: On-device Real-time Hand Tracking," *CV4ARVR Workshop*, 2020. https://arxiv.org/abs/2006.10214
+
+[15] G. Moon, S.-I. Yu, H. Wen, T. Shiratori, and K. M. Lee, "InterHand2.6M: A Dataset and Baseline for 3D Interacting Hand Pose Estimation from a Single RGB Image," *ECCV*, 2020. https://arxiv.org/abs/2008.09309
+
+[16] G. Pavlakos, D. Shan, I. Radosavovic, A. Kanazawa, D. Fouhey, and J. Malik, "Reconstructing Hands in 3D with Transformers," *CVPR*, 2024. https://arxiv.org/abs/2312.05251
+
+[17] J. Park, Y. Oh, G. Moon, H. Choi, and K. M. Lee, "HandOccNet: Occlusion-Robust 3D Hand Mesh Estimation Network," *CVPR*, 2022. https://openaccess.thecvf.com/content/CVPR2022/html/Park_HandOccNet_Occlusion-Robust_3D_Hand_Mesh_Estimation_Network_CVPR_2022_paper.html
+
+[18] M. Atzori, A. Gijsberts, C. Castellini, et al., "Electromyography data for non-invasive naturally-controlled robotic hand prostheses," *Scientific Data*, vol. 1, 140053, 2014. https://doi.org/10.1038/sdata.2014.53
+
+[19] U. Cote-Allard, C. L. Fall, A. Drouin, et al., "Deep Learning for Electromyographic Hand Gesture Signal Classification Using Transfer Learning," *IEEE TNSRE*, vol. 27, no. 4, pp. 760–771, 2019. https://doi.org/10.1109/TNSRE.2019.2896269
+
+[20] P. Kaifosh, T. R. Reardon, et al. (CTRL-labs at Reality Labs), "A generic non-invasive neuromotor interface for human-computer interaction," *Nature*, vol. 645, pp. 702–711, 2025. https://www.nature.com/articles/s41586-025-09255-w
+
+[21] V. Medved, S. Medved, and I. Kovač, "Critical Appraisal of Surface Electromyography (sEMG) as a Taught Subject and Clinical Tool in Medicine and Kinesiology," *Frontiers in Neurology*, vol. 11, 560363, 2020. https://doi.org/10.3389/fneur.2020.560363
+
+[22] V. Nazari and Y. P. Zheng, "Controlling Upper Limb Prostheses Using Sonomyography (SMG): A Review," *Sensors*, vol. 23, no. 4, 1885, 2023. https://doi.org/10.3390/s23041885
 
 ---
