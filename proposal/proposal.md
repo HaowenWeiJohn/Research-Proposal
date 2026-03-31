@@ -296,6 +296,18 @@ The clinical value of muscle ultrasound has driven rapid progress in miniaturizi
 
 Most recently, this hardware trajectory has converged with the gesture and movement sensing goals described above. Grandi Sgambato et al. [7] achieved user-generic wrist and hand tracking for virtual reality from wearable ultrasound — critically, without requiring per-user calibration — demonstrating that ultrasound-based interfaces can generalize across individuals (Nature Communications). Lu et al. [32] demonstrated a fully integrated, wireless ultrasound imaging wristband that continuously tracks 22 degrees of freedom across all five fingers and the palm in real time with less than 120 milliseconds of latency, enabling control of a robotic hand with sufficient dexterity for piano playing (Nature Electronics). This trajectory — from bulky clinical probes to smartwatch-sized wearable imaging systems — positions ultrasound as a practical modality for the always-on internal sensing that this proposal requires.
 
+### 7.6 Multimodal Sensing, Benchmarks, and Reasoning for Human Movement
+
+Multimodal datasets for hand and body understanding have grown steadily in scale and sophistication. GRAB [33] captured whole-body grasping of 51 objects with full 3D body, hand, and face pose via motion capture. ARCTIC [34] extended this to bimanual manipulation of articulated objects across 2.1 million frames. On the sensing side, sEMG-IMU fusion [2] and emg2pose [3] demonstrated that combining modalities improves pose estimation over any single sensor, while MMTouch [4] introduced multimodal visual-tactile reasoning for dexterous manipulation. Yet a consistent pattern emerges across these efforts: all combine *external* modalities — cameras, inertial sensors, surface electrodes, tactile arrays — and none includes an internal imaging modality that reveals the muscle dynamics producing the observed movement.
+
+This gap matters for reasoning, not just sensing. PhysBench [35] benchmarked 75 vision-language models on physical world understanding and found systematic failures in reasoning about dynamics, forces, and material properties — capabilities that require information beyond what images convey. The Touch-Vision-Language dataset [36] demonstrated that adding tactile sensing to vision-language models improves physical property classification by 29% over vision alone, establishing that non-visual modalities provide critical signal for physical reasoning. If adding touch — a surface contact modality — yields such gains, adding ultrasound — which images the internal mechanics of movement — may similarly transform reasoning about human physical intelligence. No existing multimodal benchmark provides this internal view, and our proposed work (Years 1–2) is designed to fill precisely this gap.
+
+### 7.7 AI for Physical Training and Rehabilitation
+
+Computational approaches for exercise quality assessment have progressed from rule-based systems to deep learning. The KIMORE dataset [37] established benchmark evaluation for rehabilitation exercises, providing clinician-scored movement data from 78 subjects including patients with stroke and Parkinson's disease. Liao et al. [38] developed deep temporal architectures that automatically score rehabilitation exercises from skeleton sequences, while Parmar et al. [39] extended quality assessment to the fitness domain with Fitness-AQA, using self-supervised representations to evaluate workout form at scale (ECCV). These systems demonstrate that AI can meaningfully assess movement quality — but all operate exclusively on external kinematics derived from cameras or inertial sensors.
+
+A scoping review of AI-driven virtual rehabilitation in npj Digital Medicine [40] surveyed the field and found that every system relies on external observation: camera-based pose estimation, wearable IMUs, or depth sensors. No system assesses internal muscle activation quality. Current AI can detect that a patient's squat deviates from a reference trajectory, but it cannot determine *why* — whether the deviation reflects weak gluteal activation, quadriceps dominance, or compensatory hip flexor engagement. This is the gap our Year 3 system addresses: by incorporating ultrasound alongside EMG and vision, we move from coaching based on what movement *looks like* to coaching based on how movement is *produced*.
+
 ---
 
 ## 8. Broader Impact
@@ -376,5 +388,21 @@ By releasing the UltraPose dataset (Year 1) and the multimodal reasoning benchma
 [31] M. Lin, Z. Zhang, X. Gao, Y. Bian, R. S. Wu, et al., "A fully integrated wearable ultrasound system to monitor deep tissues in moving subjects," *Nature Biotechnology*, vol. 42, no. 3, pp. 448–457, 2024. https://doi.org/10.1038/s41587-023-01800-0
 
 [32] G. Lu, S. Kim, X. Chen, Y. Zeng, D. Li, S. Wang, et al., "Hand tracking using wearable wrist imaging," *Nature Electronics*, 2026. https://doi.org/10.1038/s41928-026-01594-4
+
+[33] O. Taheri, N. Ghorbani, M. J. Black, and D. Tzionas, "GRAB: A Dataset of Whole-Body Human Grasping of Objects," *ECCV*, 2020. https://doi.org/10.1007/978-3-030-58548-8_34
+
+[34] Z. Fan, O. Taheri, D. Tzionas, M. Kocabas, M. Kaufmann, M. J. Black, and O. Hilliges, "ARCTIC: A Dataset for Dexterous Bimanual Hand-Object Manipulation," *CVPR*, 2023. https://doi.org/10.1109/CVPR52729.2023.01244
+
+[35] W. Chow, J. Mao, B. Li, D. Seita, V. Guizilini, and Y. Wang, "PhysBench: Benchmarking and Enhancing Vision-Language Models for Physical World Understanding," *ICLR*, 2025. https://arxiv.org/abs/2501.16411
+
+[36] L. Fu, G. Datta, H. Huang, W. C.-H. Panitch, J. Drake, J. Ortiz, M. Mukadam, M. Lambeta, R. Calandra, and K. Goldberg, "A Touch, Vision, and Language Dataset for Multimodal Alignment," *ICML*, PMLR 235:14080–14101, 2024. https://proceedings.mlr.press/v235/fu24b.html
+
+[37] M. Capecci, M. G. Ceravolo, F. Ferracuti, S. Iarlori, A. Monteriu, L. Romeo, and F. Verdini, "The KIMORE Dataset: KInematic Assessment of MOvement and Clinical Scores for Remote Monitoring of Physical REhabilitation," *IEEE TNSRE*, vol. 27, no. 7, pp. 1436–1448, 2019. https://doi.org/10.1109/TNSRE.2019.2923060
+
+[38] Y. Liao, A. Vakanski, and M. Xian, "A Deep Learning Framework for Assessing Physical Rehabilitation Exercises," *IEEE TNSRE*, vol. 28, no. 2, pp. 468–477, 2020. https://doi.org/10.1109/TNSRE.2020.2966249
+
+[39] P. Parmar, A. Gharat, and H. Rhodin, "Domain Knowledge-Informed Self-Supervised Representations for Workout Form Assessment," *ECCV*, pp. 105–123, 2022. https://doi.org/10.1007/978-3-031-19839-7_7
+
+[40] A. Abedi, T. J. F. Colella, M. Pakosh, and S. S. Khan, "Artificial intelligence-driven virtual rehabilitation for people living in the community: A scoping review," *npj Digital Medicine*, vol. 7, 25, 2024. https://doi.org/10.1038/s41746-024-00998-w
 
 ---
