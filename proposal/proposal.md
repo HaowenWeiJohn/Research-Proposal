@@ -81,7 +81,7 @@ We will build an agentic system that uses ultrasound+EMG+vision to assess whethe
 **Sensor Suite (captured simultaneously):**
 | Sensor | Purpose | Specification |
 |--------|---------|---------------|
-| Wearable forearm ultrasound | Internal muscle dynamics | B-mode imaging, ≥15 fps |
+| Wearable forearm ultrasound | Internal muscle dynamics | B-mode imaging, ≥30 fps |
 | 8-16 channel sEMG | Muscle electrical activation | 2 kHz sampling, forearm band |
 | Motion tracking (optical) | Hand pose ground truth | Marker-based or markerless, sub-mm accuracy |
 | Vision cameras (multi-view) | Visual reference | 4-8 cameras, 30+ fps |
