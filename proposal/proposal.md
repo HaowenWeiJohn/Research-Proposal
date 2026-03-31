@@ -63,7 +63,7 @@ This proposal addresses all three gaps.
 Using controlled, standardized hand poses, we will systematically evaluate every meaningful sensor combination — US-only, EMG-only, Vision-only, US+EMG, US+Vision, EMG+Vision, US+EMG+Vision, and others — for continuous hand pose (23+ DoF) and per-finger force estimation. We will identify for which specific poses and tasks ultrasound provides the greatest advantage, and where it offers little beyond existing modalities.
 
 **RQ2: Can a multimodal reasoning benchmark incorporating ultrasound enable AI models to better reason about human manipulation?**
-Building on the MMTouch paradigm [4], we will construct a multimodal reasoning benchmark that pairs ultrasound with vision, tactile, and EMG during free-form object manipulation. We will evaluate whether ultrasound improves model performance on reasoning tasks — such as predicting manipulation outcomes, identifying grip strategies, and inferring applied forces — beyond what vision+tactile+EMG achieve alone.
+We will construct a multimodal reasoning benchmark that pairs ultrasound with vision, tactile, and EMG during free-form object manipulation. We will evaluate whether ultrasound improves model performance on reasoning tasks — such as predicting manipulation outcomes, identifying grip strategies, and inferring applied forces — beyond what vision+tactile+EMG achieve alone.
 
 **RQ3: Can a multimodal AI system using ultrasound evaluate movement correctness and provide personalized real-time feedback for physical training?**
 We will build an agentic system that uses ultrasound+EMG+vision to assess whether a person is performing an exercise correctly at the internal muscle level — detecting recruitment errors invisible to cameras — and provides real-time, personalized guidance to improve movement quality during training and rehabilitation.
@@ -99,7 +99,7 @@ Tasks are deliberately controlled and standardized — no free-form object manip
 
 **Scale:** ~20-40 hours of synchronized multimodal data.
 
-**Synchronization:** All sensors software-synchronized to <5 ms, following best practices from multi-sensor capture systems such as MMTouch [4].
+**Synchronization:** All sensors software-synchronized to <5 ms, following best practices from multi-sensor capture systems.
 
 #### 4.1.2 Ablation Studies and Correlation Analysis
 
@@ -129,9 +129,9 @@ This is the centerpiece contribution of Year 1 — not merely releasing a datase
 
 ---
 
-### Year 2: Multimodal Reasoning Benchmark — Ultrasound Meets MMTouch
+### Year 2: Multimodal Reasoning Benchmark
 
-**Objective:** Build a multimodal reasoning benchmark — analogous to MMTouch [4] — that adds ultrasound as the internal modality alongside vision, tactile, and EMG during free-form object manipulation. Train multimodal models and evaluate how much ultrasound improves reasoning about human manipulation.
+**Objective:** Build a multimodal reasoning benchmark that adds ultrasound as the internal modality alongside vision, tactile, and EMG during free-form object manipulation. Train multimodal models and evaluate how much ultrasound improves reasoning about human manipulation.
 
 #### 4.2.1 New Dataset: Free-Form Manipulation
 
@@ -145,7 +145,7 @@ This is a **separate dataset from Year 1's UltraPose.** Where UltraPose captured
 | Vision cameras (multi-view) | Visual context | Multi-view, 30+ fps |
 | Force sensors (tactile hand glove) | Contact force ground truth | Per-finger force measurement |
 
-**Task Taxonomy (paralleling MMTouch [4]):**
+**Task Taxonomy:**
 - **Grasping** — cups, bottles, tools, small objects with varying shapes and weights
 - **Tool use** — scissors, screwdrivers, pens, kitchen utensils
 - **Daily actions** — opening containers, pouring, typing, buttoning, turning knobs
@@ -154,15 +154,15 @@ This is a **separate dataset from Year 1's UltraPose.** Where UltraPose captured
 
 Participants manipulate real daily objects freely, naturally varying their grip strategies, force application, and manipulation style.
 
-**Annotation Schema (MMTouch-style):**
+**Annotation Schema:**
 - Task labels and manipulation type categories
 - QA pairs for multimodal reasoning (e.g., "What muscle group is primarily engaged?", "Is the grip force appropriate for this object?", "What manipulation strategy is being used?")
 - Force annotations, grasp type labels, object properties
-- Targeting scale comparable to MMTouch's 37,571 annotated interactions
+- Targeting scale of ~30,000+ annotated interactions
 
 #### 4.2.2 Multimodal Model Training
 
-- Train VLM-based or multimodal models on the benchmark, following MMTouch's evaluation paradigm
+- Train VLM-based or multimodal models on the benchmark
 - **Fusion strategies:** Early fusion, late fusion, and cross-attention mechanisms
 - **Cross-modal prediction:** Evaluate the practical question — can models trained with ultrasound supervision deploy without it? (Train with US, infer from vision+EMG alone)
 - Self-supervised pretraining on ultrasound sequences (adapting approaches from clinical ultrasound [11] and temporal reconstruction [12]) to reduce labeled data requirements
@@ -171,7 +171,7 @@ Participants manipulate real daily objects freely, naturally varying their grip 
 
 - **Modality ablation:** Evaluate with/without ultrasound across all task types. Quantify the per-task and per-modality contribution — directly answering: how much does adding the internal modality improve reasoning about manipulation?
 - **Cross-participant generalization:** How well do models transfer across users for each modality combination?
-- **Comparison with external-only baselines:** Vision+Tactile only (MMTouch-equivalent) vs. Vision+Tactile+US vs. all modalities
+- **Comparison with external-only baselines:** Vision+Tactile only vs. Vision+Tactile+US vs. all modalities
 - **Per-task breakdown:** Identify which manipulation tasks benefit most from ultrasound (e.g., force-sensitive tasks, tasks requiring deep muscle engagement)
 
 #### 4.2.4 Deliverables
@@ -238,18 +238,7 @@ The MIT.nano Immersion Lab provides the infrastructure essential for this resear
 - **Ultrasound equipment** — B-mode imaging capability
 - **EMG systems** — multi-channel surface EMG acquisition
 - **Computing infrastructure** — GPU clusters for model training
-
-### 5.2 Relationship to MMTouch
-
-MMTouch [4], a recent large-scale visual-tactile benchmark from another research group, demonstrated the power of multimodal reasoning benchmarks for understanding physical interaction:
-- Large-scale multimodal datasets (82 objects, 13 manipulation types, 37,571 QA pairs)
-- Multi-sensor capture with tight synchronization (<3 ms across modalities)
-- Multi-tactile supervision yielding the largest per-modality gains (+18.9%)
-- Cross-hardware and cross-participant transfer as key evaluation axes
-
-MMTouch captures the **external** side of manipulation (surface pressure, visual appearance). Our Year 2 benchmark directly extends this paradigm by adding the complementary **internal** side (muscle dynamics, tendon mechanics) via ultrasound. Where MMTouch asks "what is happening at the contact surface?", our benchmark asks "what is happening inside the body that produces this manipulation?" Together, external tactile sensing and internal ultrasound sensing form a complete picture of human physical intelligence — from internal cause to external effect.
-
-### 5.3 Unique Positioning
+### 5.2 Unique Positioning
 
 The MIT Immersion Lab is uniquely positioned to pursue this research:
 1. Access to ultrasound, motion capture, EMG, and camera infrastructure in a single facility
@@ -265,7 +254,7 @@ The MIT Immersion Lab is uniquely positioned to pursue this research:
 
 2. **Quantified Ultrasound Advantage** — Per-pose, per-task evidence of exactly when and why ultrasound provides unique information beyond other modalities, and where it offers minimal advantage — providing the field with a rigorous empirical foundation for ultrasound-based sensing.
 
-3. **Multimodal Reasoning Benchmark** — An MMTouch-style benchmark that adds ultrasound as the internal modality alongside vision, tactile, and EMG during free-form object manipulation, with trained multimodal models and comprehensive evaluation of ultrasound's contribution to manipulation reasoning.
+3. **Multimodal Reasoning Benchmark** — A benchmark that adds ultrasound as the internal modality alongside vision, tactile, and EMG during free-form object manipulation, with trained multimodal models and comprehensive evaluation of ultrasound's contribution to manipulation reasoning.
 
 4. **Agentic Physical Training System** — A validated AI system that uses ultrasound+EMG+vision to evaluate movement correctness at the internal muscle level and provides personalized real-time feedback for physical training and rehabilitation — demonstrating that ultrasound enables coaching guidance impossible with external observation alone.
 
