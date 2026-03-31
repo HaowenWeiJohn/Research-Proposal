@@ -1,4 +1,4 @@
-# Ultrasound as the Missing Internal Modality for Understanding Human Physical Intelligence"
+# Ultrasound as the Missing Internal Modality for Understanding Human Physical Intelligence
 
 ## A 3-Year Research Proposal
 
