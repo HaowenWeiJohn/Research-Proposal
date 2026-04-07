@@ -1,6 +1,6 @@
 # Ultrasound as the Missing Internal Modality for Understanding Human Physical Intelligence
 
-## A 3-Year Research Proposal
+## A 3-Year Research Plan
 
 **Researcher:** Haowen Wei
 **Lab:** Device Realization Lab & Immersion Lab, MIT
