@@ -125,7 +125,7 @@ This is the centerpiece contribution of Year 1 — not merely releasing a datase
 
 - **Probe placement variability:** Include multiple sessions per subject with re-mounting; develop probe-shift augmentation strategies
 - **Subject recruitment:** 15-25 subjects is manageable with MIT's subject pool; 1-hour sessions per participant
-- **Hardware:** Use commercial B-mode probes initially (no custom hardware risk); consider WULPUS for A-mode comparison
+- **Hardware:** Use commercial B-mode probes initially (no custom hardware risk).
 
 ---
 
